@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SoloRate — Freelance Rate Calculator</title>
+<meta name="description" content="SoloRate is a free Freelance Rate Calculator. Reverse-calculate the hourly rate you need from your target yearly income, with tax-buffer and unpaid-time sliders and a copyable rate card.">
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,800&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>body{font-family:Inter,system-ui,sans-serif}.font-display{font-family:Fraunces,serif}input[type=range]{accent-color:#f43f5e}</style>
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How does SoloRate calculate my required hourly rate?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "SoloRate starts with the take-home income you want, adds your annual business expenses, then grosses that total up for your tax buffer so tax does not eat into your target. It divides the result by your realistic billable hours for the year — your weekly hours times the weeks you actually work, reduced by your unpaid-time percentage for admin, marketing and revisions. That gives an hourly rate grounded in your real capacity, not a guess."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is unpaid time and why does it matter so much?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Unpaid time is the work you do that no client pays for directly: emails, proposals, invoicing, bookkeeping, portfolio updates, learning and chasing late payments. Many freelancers spend twenty to forty percent of their week on it. If you ignore it and divide by every hour you work, you underprice badly. SoloRate lets you slide the unpaid-time percentage and watch your required rate rise to cover those hours honestly."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What tax buffer should I use in the calculator?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use a buffer close to the effective tax rate you actually expect to pay on freelance income, including income tax and any self-employment or social contributions that apply where you live. If you are unsure, start with the rate you paid last year, or set a cautious buffer ten points higher and treat any surplus as a bonus. SoloRate is a planning tool, not tax advice, so confirm important decisions with a qualified accountant."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I use reverse mode versus forward mode?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Reverse mode is the default: you enter the yearly income you want to take home and SoloRate works backwards to the hourly rate you must charge. Forward mode flips the question — you enter an hourly rate you are considering and SoloRate shows the gross and net yearly income it would produce at your current hours, tax buffer and expenses. Use reverse mode to set your price and forward mode to sanity-check offers and discounts."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is a rate card and how should I share it?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A rate card is a short, clear summary of your prices: hourly rate, day rate and tiers for standard, premium and rush work. SoloRate builds one automatically from your calculation and lets you copy it as plain text. Paste it into proposals, emails or your website so clients see consistent, confident pricing instead of a number invented on the spot during a call."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How often should I recalculate my freelance rate?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Recalculate at least once a year, and whenever something material changes: your expenses rise, your tax situation changes, you take more holiday, or demand for your work grows. Many experienced freelancers review rates every six months. If clients never push back on price, that is often a sign your rate is too low and a recalculation with a higher income target is overdue."
+      }
+    }
+  ]
+}</script>
+</head>
+<body id="top" class="bg-[#eef0ff] text-slate-800">
+<header class="sticky top-0 z-50 bg-indigo-950 text-white shadow"><div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between"><a href="#top" class="font-display text-2xl font-extrabold">◈ SoloRate</a><nav class="flex gap-5 text-sm font-semibold"><a href="#top" class="hover:text-rose-300">Home</a><a href="https://fixoraa.tech" class="hover:text-rose-300">More Tools</a></nav></div></header>
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pt-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:728px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <div class="origin-top scale-[0.44] sm:scale-100 shrink-0">
+        <script>
+          atOptions = { 'key' : '4e68ac77881c17fe128a46565d9a4e8c', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
+        </script>
+        <script src="https://www.highrevenueformat.com/4e68ac77881c17fe128a46565d9a4e8c/invoke.js"></script>
+      </div>
+    </div>
+  </div>
+</div>
+<main class="max-w-6xl mx-auto px-4 sm:px-6 py-8">
+<div class="grid lg:grid-cols-5 rounded-[2rem] overflow-hidden shadow-2xl bg-white">
+<section class="lg:col-span-2 bg-indigo-700 text-white p-7 sm:p-10 flex flex-col justify-between min-h-[420px]">
+<div><span class="inline-block bg-rose-500 text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-widest">Unlimited Free Usage</span>
+<h1 class="font-display text-5xl sm:text-6xl leading-[0.95] mt-6">Charge<br>what you<br><span class="text-rose-400">actually</span><br>need.</h1>
+<p class="mt-5 text-indigo-100 leading-relaxed">Most freelancers guess a rate, then wonder why a busy year still feels broke. SoloRate works backwards from the life you want — income, tax, holidays and all that unpaid admin — to the one honest number: your hourly rate.</p></div>
+<div class="mt-8 bg-indigo-900/60 rounded-2xl p-5"><p class="text-xs uppercase tracking-widest text-indigo-300 font-bold">Your required rate</p><p id="bigRate" class="font-display text-6xl mt-1">$75.32<span class="text-xl text-indigo-300">/hr</span></p><p id="bigSub" class="text-sm text-indigo-200 mt-2">Day rate $602.56 · Monthly gross $7,083.33</p></div>
+</section>
+<section class="lg:col-span-3 p-6 sm:p-8">
+<div class="flex gap-2 mb-6"><button id="modeReverse" class="flex-1 py-3 rounded-xl font-bold bg-indigo-600 text-white">🎯 Reverse: Income → Rate</button><button id="modeForward" class="flex-1 py-3 rounded-xl font-bold bg-indigo-50 text-indigo-900 border border-indigo-200">↔ Forward: Rate → Income</button></div>
+<div id="reverseInputs">
+<label class="block font-bold text-sm">Target take-home income / year <input id="targetIncome" type="number" min="0" value="60000" class="mt-1 w-full border-2 border-indigo-100 rounded-xl px-4 py-3 text-lg font-bold focus:outline-none focus:border-indigo-500"></label>
+<label class="block font-bold text-sm mt-4">Annual business expenses (software, gear, insurance) <input id="expenses" type="number" min="0" value="5000" class="mt-1 w-full border-2 border-indigo-100 rounded-xl px-4 py-3 focus:outline-none focus:border-indigo-500"></label>
+</div>
+<div id="forwardInputs" class="hidden"><label class="block font-bold text-sm">Hourly rate to test <input id="testRate" type="number" min="0" value="75" class="mt-1 w-full border-2 border-indigo-100 rounded-xl px-4 py-3 text-lg font-bold focus:outline-none focus:border-indigo-500"></label><div id="forwardResult" class="mt-4 bg-emerald-50 border border-emerald-200 rounded-xl p-4 text-sm"></div></div>
+<div class="grid sm:grid-cols-2 gap-4 mt-5">
+<label class="block font-bold text-sm">Hours per week <input id="hoursPerWeek" type="number" min="1" max="80" value="40" class="mt-1 w-full border-2 border-indigo-100 rounded-xl px-4 py-3"></label>
+<label class="block font-bold text-sm">Hours per day <input id="hoursPerDay" type="number" min="1" max="24" value="8" class="mt-1 w-full border-2 border-indigo-100 rounded-xl px-4 py-3"></label>
+<label class="block font-bold text-sm">Vacation weeks / year <input id="vacationWeeks" type="number" min="0" max="51" value="4" class="mt-1 w-full border-2 border-indigo-100 rounded-xl px-4 py-3"></label>
+<label class="block font-bold text-sm">Currency symbol <select id="currency" class="mt-1 w-full border-2 border-indigo-100 rounded-xl px-4 py-3 bg-white"><option value="$">$ USD</option><option value="£">£ GBP</option><option value="€">€ EUR</option><option value="₹">₹ INR</option></select></label>
+</div>
+<div class="mt-6 space-y-5 bg-rose-50 border border-rose-100 rounded-2xl p-5">
+<div><div class="flex justify-between font-bold text-sm"><span>🧾 Tax buffer</span><span id="taxLabel" class="text-rose-600">20%</span></div><input id="taxPct" type="range" min="0" max="60" value="20" class="w-full mt-2"><p class="text-xs text-slate-500 mt-1">Set aside for income tax &amp; self-employment charges. Higher buffer = higher, safer rate.</p></div>
+<div><div class="flex justify-between font-bold text-sm"><span>🕐 Unpaid time (admin, pitching, revisions)</span><span id="unpaidLabel" class="text-rose-600">25%</span></div><input id="unpaidPct" type="range" min="0" max="70" value="25" class="w-full mt-2"><p class="text-xs text-slate-500 mt-1">Only <span id="utilLabel">75%</span> of your working time is billable. Be honest here — this slider changes everything.</p></div>
+</div>
+<p id="msg" class="mt-4 text-sm font-semibold text-rose-600 min-h-[20px]"></p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4 text-center">
+<div class="bg-indigo-50 rounded-xl p-3"><p class="text-[11px] uppercase font-bold text-indigo-400">Billable hrs/yr</p><p id="statHours" class="font-extrabold text-indigo-950">—</p></div>
+<div class="bg-indigo-50 rounded-xl p-3"><p class="text-[11px] uppercase font-bold text-indigo-400">Day rate</p><p id="statDay" class="font-extrabold text-indigo-950">—</p></div>
+<div class="bg-indigo-50 rounded-xl p-3"><p class="text-[11px] uppercase font-bold text-indigo-400">Standard ×1.25</p><p id="statStd" class="font-extrabold text-indigo-950">—</p></div>
+<div class="bg-indigo-50 rounded-xl p-3"><p class="text-[11px] uppercase font-bold text-indigo-400">Rush ×2</p><p id="statRush" class="font-extrabold text-indigo-950">—</p></div>
+</div>
+<div class="mt-6"><div class="flex items-center justify-between"><h2 class="font-display font-bold text-xl text-indigo-950">📋 Your rate card</h2><button id="copyBtn" class="bg-rose-500 hover:bg-rose-600 text-white font-bold px-4 py-2 rounded-xl text-sm">Copy rate card</button></div><pre id="rateCard" class="mt-3 bg-indigo-950 text-indigo-100 rounded-2xl p-5 text-sm whitespace-pre-wrap overflow-auto"></pre><p id="copyMsg" class="text-sm text-emerald-600 font-semibold mt-2"></p></div>
+</section></div>
+
+<article class="mt-12 bg-white rounded-[2rem] p-6 sm:p-10 shadow">
+<h2 class="font-display text-3xl font-bold text-indigo-950">How to Price Freelance Work Without Guessing: A Complete Guide to Finding Your Real Hourly Rate</h2>
+<p class="mt-4 leading-relaxed text-slate-600">Ask a room full of freelancers how they chose their hourly rate and most will confess the same origin story: they took a salary they once had, divided it by a rough number of hours, added a little, and hoped for the best. Some copied a competitor. Some picked a round number that felt brave but not greedy. Almost none of them worked backwards from the life they actually want to fund, the taxes they actually owe, and the hours they can actually bill. That gap between a guessed rate and a calculated rate is where freelance businesses quietly leak money year after year, even while their owners feel permanently busy.</p>
+<p class="mt-4 leading-relaxed text-slate-600">SoloRate exists to close that gap. It is a reverse freelance rate calculator: instead of starting with a rate and hoping the income works out, you start with the income and let the maths reveal the rate. That single reversal changes the psychology of pricing completely. A salary is a constraint someone else set for you. A target income is a decision you make for yourself, based on your rent or mortgage, your family, your savings goals, your pension, and the standard of living your skills have genuinely earned. When the calculator turns that decision into an hourly figure, the number stops being a wish and becomes a plan.</p>
+<h3 class="font-display text-2xl font-bold text-indigo-950 mt-8">The three leaks that sink freelance rates</h3>
+<p class="mt-4 leading-relaxed text-slate-600">The first leak is tax. Employees often barely think about tax because it disappears before their pay arrives. Freelancers are the opposite: every invoice is gross income, and a meaningful slice of it already belongs to the tax authority. If you set your rate from the money you want to keep but forget the tax you must hand over, you have underpriced by exactly that slice. SoloRate handles this with a tax-buffer slider. You tell it the percentage of gross income you expect to lose to taxes and self-employment charges, and it grosses up your target accordingly, so the rate it shows already contains the tax money. The buffer is not profit and it is not spending money; it is a pass-through you collect on behalf of the government, and treating it that way is one of the healthiest financial habits a freelancer can build.</p>
+<p class="mt-4 leading-relaxed text-slate-600">The second leak is unpaid time, and it is usually the biggest. A salaried employee who works forty hours a week is paid for forty hours a week, including the meetings, the emails, the training days and the time spent fixing the printer. A freelancer who works forty hours a week might bill only twenty-five of them. The rest vanish into discovery calls that go nowhere, proposals, quotes, invoicing, chasing late payments, updating a portfolio, learning new tools, and the small revisions clients assume are free. If you divide your income target by all the hours you work instead of only the hours you can bill, your effective pay collapses. SoloRate's unpaid-time slider forces this honesty. Set it to twenty-five percent and the calculator quietly removes a quarter of your year from the billable pool, raising your rate to compensate. Many users find that this one slider explains years of feeling overworked and underpaid in a single adjustment.</p>
+<p class="mt-4 leading-relaxed text-slate-600">The third leak is expenses and time off. Software subscriptions, a laptop that will not live forever, insurance, accounting fees, coworking, phone and internet costs, professional memberships — individually they look small, together they commonly run to several thousand a year, and they must come out of your invoices before you earn a cent for yourself. Likewise, holidays, sick days and quiet weeks between projects mean nobody works fifty-two weeks a year. SoloRate asks for your annual expenses and your vacation weeks explicitly, adds the expenses to the amount your rate must generate, and removes the holiday weeks from your available time. A rate that ignores rest is a rate that punishes you for taking any.</p>
+<h3 class="font-display text-2xl font-bold text-indigo-950 mt-8">How the reverse calculation works, step by step</h3>
+<p class="mt-4 leading-relaxed text-slate-600">The maths behind SoloRate is deliberately transparent, because a rate you understand is a rate you can defend to a client and to yourself. First, the calculator adds your target take-home income and your annual business expenses together. That sum is the minimum net amount your work must produce after tax. Second, it grosses that sum up using your tax buffer: if you expect to lose twenty percent to tax, the calculator divides by nought point eight, producing the gross revenue you must actually invoice across the year. Third, it works out your billable hours: your hours per week, multiplied by fifty-two minus your vacation weeks, multiplied by one minus your unpaid-time percentage. Finally, it divides the gross revenue by the billable hours. The answer is the minimum hourly rate at which your plan holds together. Multiply it by your hours per day and you have a day rate, which many clients prefer and which protects you from the slow creep of hourly billing on long projects.</p>
+<p class="mt-4 leading-relaxed text-slate-600">Forward mode deserves a mention too, because it answers the question clients force on you in real time: what if I charge this much instead? Enter any rate — a discounted rate for a favourite client, a lowball offer you are tempted by, a stretch rate you are nervous about proposing — and SoloRate projects the gross income, tax and take-home pay that rate would actually deliver at your current capacity. Seeing a tempting discount translated into thousands lost across a year is a powerful antidote to people-pleasing. Conversely, seeing that a modest five-unit increase compounds into a meaningful annual raise often gives freelancers the courage to ask for it.</p>
+<h3 class="font-display text-2xl font-bold text-indigo-950 mt-8">From a minimum rate to a rate card</h3>
+<p class="mt-4 leading-relaxed text-slate-600">The number SoloRate gives you is a floor, not a ceiling: it is the rate below which your current plan stops working. Healthy pricing builds tiers on top of that floor, and that is exactly what the copyable rate card does. The standard tier, at one and a quarter times your floor, suits well-scoped work for good clients. The premium tier, at one point six times, suits specialist work, tight deadlines handled comfortably, or clients who need extra hand-holding. The rush tier, at double, prices genuine urgency — evenings, weekends and rescheduled priorities — so that saying yes to a rush job feels rewarding rather than resentful. Publishing these tiers on a simple rate card, and pasting that card into proposals, does something subtle and valuable: it moves negotiation away from your worth as a person and towards a menu the client can choose from. Clients who would haggle a single number up and down will often simply pick a tier.</p>
+<p class="mt-4 leading-relaxed text-slate-600">A rate card also creates consistency across time. Without one, freelancers charge whatever their confidence happens to be that week — high after a compliment, low after a quiet month — and clients talk to each other. With one, every quote starts from the same documented base, discounts become visible decisions instead of silent drift, and raising your rates becomes an administrative act: recalculate, update the card, and quote the new numbers from a chosen date. That professionalism itself justifies premium pricing, because clients equate organised pricing with an organised practitioner.</p>
+<h3 class="font-display text-2xl font-bold text-indigo-950 mt-8">Common pricing mistakes this calculator helps you avoid</h3>
+<p class="mt-4 leading-relaxed text-slate-600">The most common mistake is pricing from a former salary without adjustment. A salary came with paid holidays, employer pension contributions, sick pay, equipment and a tax system that handled itself; your freelance rate must replace all of that, which is why a like-for-like hourly conversion almost always underprices. The second mistake is anchoring on what competitors charge without knowing their costs, capacity or desperation. The third is forgetting that utilisation is never one hundred percent, even for the most in-demand specialist. The fourth is never raising rates: costs inflate every year, so a static rate is a shrinking income, and a calculator makes the required increase concrete instead of emotional. The fifth is discounting by cutting the rate while keeping the scope, when the healthier move is to keep the rate and trim deliverables — your rate card tiers make that conversation easy, because the client can choose a smaller scope at the standard tier rather than your time at a loss-making one.</p>
+<p class="mt-4 leading-relaxed text-slate-600">Finally, remember what a rate really is. It is not a judgement of your talent and it is not a number you must apologise for. It is the arithmetic consequence of the income you need, the taxes you owe, the costs you carry and the hours you can truly sell. Change any of those inputs and the rate changes with it, which is why SoloRate puts the sliders in your hands. Use it before your next quote, use it when a client asks for a discount, and use it every January when you plan the year. Price from your life outward, and the busy-but-broke feeling that haunts so much freelancing finally starts to lift.</p>
+
+</article>
+<section class="mt-10"><h2 class="font-display text-3xl font-bold text-indigo-950 mb-5">Frequently Asked Questions</h2><div class="space-y-4"><details class="bg-white rounded-2xl border border-indigo-100 p-5"><summary class="font-bold cursor-pointer text-indigo-950">How does SoloRate calculate my required hourly rate?</summary><p class="mt-3 text-slate-600 leading-relaxed">SoloRate starts with the take-home income you want, adds your annual business expenses, then grosses that total up for your tax buffer so tax does not eat into your target. It divides the result by your realistic billable hours for the year — your weekly hours times the weeks you actually work, reduced by your unpaid-time percentage for admin, marketing and revisions. That gives an hourly rate grounded in your real capacity, not a guess.</p></details>
+<details class="bg-white rounded-2xl border border-indigo-100 p-5"><summary class="font-bold cursor-pointer text-indigo-950">What is unpaid time and why does it matter so much?</summary><p class="mt-3 text-slate-600 leading-relaxed">Unpaid time is the work you do that no client pays for directly: emails, proposals, invoicing, bookkeeping, portfolio updates, learning and chasing late payments. Many freelancers spend twenty to forty percent of their week on it. If you ignore it and divide by every hour you work, you underprice badly. SoloRate lets you slide the unpaid-time percentage and watch your required rate rise to cover those hours honestly.</p></details>
+<details class="bg-white rounded-2xl border border-indigo-100 p-5"><summary class="font-bold cursor-pointer text-indigo-950">What tax buffer should I use in the calculator?</summary><p class="mt-3 text-slate-600 leading-relaxed">Use a buffer close to the effective tax rate you actually expect to pay on freelance income, including income tax and any self-employment or social contributions that apply where you live. If you are unsure, start with the rate you paid last year, or set a cautious buffer ten points higher and treat any surplus as a bonus. SoloRate is a planning tool, not tax advice, so confirm important decisions with a qualified accountant.</p></details>
+<details class="bg-white rounded-2xl border border-indigo-100 p-5"><summary class="font-bold cursor-pointer text-indigo-950">How do I use reverse mode versus forward mode?</summary><p class="mt-3 text-slate-600 leading-relaxed">Reverse mode is the default: you enter the yearly income you want to take home and SoloRate works backwards to the hourly rate you must charge. Forward mode flips the question — you enter an hourly rate you are considering and SoloRate shows the gross and net yearly income it would produce at your current hours, tax buffer and expenses. Use reverse mode to set your price and forward mode to sanity-check offers and discounts.</p></details>
+<details class="bg-white rounded-2xl border border-indigo-100 p-5"><summary class="font-bold cursor-pointer text-indigo-950">What is a rate card and how should I share it?</summary><p class="mt-3 text-slate-600 leading-relaxed">A rate card is a short, clear summary of your prices: hourly rate, day rate and tiers for standard, premium and rush work. SoloRate builds one automatically from your calculation and lets you copy it as plain text. Paste it into proposals, emails or your website so clients see consistent, confident pricing instead of a number invented on the spot during a call.</p></details>
+<details class="bg-white rounded-2xl border border-indigo-100 p-5"><summary class="font-bold cursor-pointer text-indigo-950">How often should I recalculate my freelance rate?</summary><p class="mt-3 text-slate-600 leading-relaxed">Recalculate at least once a year, and whenever something material changes: your expenses rise, your tax situation changes, you take more holiday, or demand for your work grows. Many experienced freelancers review rates every six months. If clients never push back on price, that is often a sign your rate is too low and a recalculation with a higher income target is overdue.</p></details></div></section>
+</main>
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pb-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:728px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <script async src="https://js.wpadmngr.com/static/adManager.js" data-admpid="464498"></script>
+    </div>
+  </div>
+</div>
+<footer class="bg-indigo-950 text-indigo-300 text-center py-8 text-sm px-4">© 2026 SoloRate — Freelance Rate Calculator. Built for freelancers who price with confidence.</footer>
+<script id="lib-solorate">var SoloRateLib = {
+  billableHoursPerYear: function (hoursPerWeek, vacationWeeks, unpaidPct) {
+    var h = Number(hoursPerWeek), v = Number(vacationWeeks), u = Number(unpaidPct);
+    if (!isFinite(h) || !isFinite(v) || !isFinite(u)) return 0;
+    if (h <= 0 || h > 168) return 0;
+    if (v < 0 || v >= 52) return 0;
+    if (u < 0 || u >= 100) return 0;
+    var weeksWorked = 52 - v;
+    return h * weeksWorked * (1 - u / 100);
+  },
+  grossNeeded: function (targetIncome, expenses, taxPct) {
+    var t = Number(targetIncome), e = Number(expenses), tax = Number(taxPct);
+    if (!isFinite(t) || !isFinite(e) || !isFinite(tax)) return null;
+    if (t < 0 || e < 0 || tax < 0 || tax >= 100) return null;
+    if (t === 0 && e === 0) return 0;
+    return (t + e) / (1 - tax / 100);
+  },
+  requiredRate: function (opts) {
+    if (!opts) return null;
+    var billable = this.billableHoursPerYear(opts.hoursPerWeek, opts.vacationWeeks, opts.unpaidPct);
+    if (billable <= 0) return null;
+    var gross = this.grossNeeded(opts.targetIncome, opts.expenses, opts.taxPct);
+    if (gross === null) return null;
+    var hoursPerDay = Number(opts.hoursPerDay);
+    if (!isFinite(hoursPerDay) || hoursPerDay <= 0 || hoursPerDay > 24) hoursPerDay = 8;
+    var hourly = gross / billable;
+    return {
+      billableHours: Math.round(billable * 100) / 100,
+      grossNeeded: Math.round(gross * 100) / 100,
+      hourlyRate: Math.round(hourly * 100) / 100,
+      dailyRate: Math.round(hourly * hoursPerDay * 100) / 100,
+      weeklyRate: Math.round(hourly * billable / Math.max(1, 52 - Number(opts.vacationWeeks || 0)) * 100) / 100,
+      monthlyGross: Math.round(gross / 12 * 100) / 100,
+      monthlyNet: Math.round(Number(opts.targetIncome) / 12 * 100) / 100,
+      taxAmount: Math.round((gross - Number(opts.targetIncome) - Number(opts.expenses)) * 100) / 100
+    };
+  },
+  incomeFromRate: function (opts) {
+    if (!opts) return null;
+    var rate = Number(opts.hourlyRate);
+    if (!isFinite(rate) || rate < 0) return null;
+    var tax = Number(opts.taxPct), exp = Number(opts.expenses);
+    if (!isFinite(tax) || tax < 0 || tax >= 100) return null;
+    if (!isFinite(exp) || exp < 0) return null;
+    var billable = this.billableHoursPerYear(opts.hoursPerWeek, opts.vacationWeeks, opts.unpaidPct);
+    if (billable <= 0) return null;
+    var gross = rate * billable;
+    var taxAmt = gross * tax / 100;
+    var net = gross - taxAmt - exp;
+    return {
+      billableHours: Math.round(billable * 100) / 100,
+      grossIncome: Math.round(gross * 100) / 100,
+      taxAmount: Math.round(taxAmt * 100) / 100,
+      netIncome: Math.round(net * 100) / 100,
+      monthlyGross: Math.round(gross / 12 * 100) / 100,
+      monthlyNet: Math.round(net / 12 * 100) / 100,
+      dailyRate: Math.round(rate * (Number(opts.hoursPerDay) || 8) * 100) / 100
+    };
+  },
+  suggestedRates: function (hourly) {
+    var h = Number(hourly);
+    if (!isFinite(h) || h <= 0) return null;
+    return {
+      minimum: Math.round(h * 100) / 100,
+      standard: Math.round(h * 1.25 * 100) / 100,
+      premium: Math.round(h * 1.6 * 100) / 100,
+      rush: Math.round(h * 2 * 100) / 100
+    };
+  },
+  formatMoney: function (n, symbol) {
+    var v = Number(n);
+    if (!isFinite(v)) return (symbol || '$') + '0.00';
+    return (symbol || '$') + v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  },
+  buildRateCard: function (req, sugg, currency) {
+    var sym = currency || '$';
+    if (!req) return '';
+    var lines = [];
+    lines.push('MY FREELANCE RATE CARD');
+    lines.push('Hourly rate: ' + this.formatMoney(req.hourlyRate, sym));
+    lines.push('Day rate: ' + this.formatMoney(req.dailyRate, sym));
+    lines.push('Monthly target (gross): ' + this.formatMoney(req.monthlyGross, sym));
+    lines.push('Billable hours per year: ' + req.billableHours);
+    if (sugg) {
+      lines.push('Standard rate (x1.25): ' + this.formatMoney(sugg.standard, sym));
+      lines.push('Premium rate (x1.6): ' + this.formatMoney(sugg.premium, sym));
+      lines.push('Rush rate (x2): ' + this.formatMoney(sugg.rush, sym));
+    }
+    lines.push('Calculated with SoloRate - Freelance Rate Calculator');
+    return lines.join('\n');
+  },
+  utilisation: function (unpaidPct) {
+    var u = Number(unpaidPct);
+    if (!isFinite(u) || u < 0 || u >= 100) return 0;
+    return Math.round((100 - u) * 10) / 10;
+  }
+};
+if (typeof module !== 'undefined' && module.exports) { module.exports = SoloRateLib; }
+</script>
+<script>
+var $=function(id){return document.getElementById(id)};
+var mode='reverse';
+function inputs(){return{targetIncome:parseFloat($('targetIncome').value),expenses:parseFloat($('expenses').value)||0,taxPct:parseFloat($('taxPct').value),unpaidPct:parseFloat($('unpaidPct').value),hoursPerWeek:parseFloat($('hoursPerWeek').value),hoursPerDay:parseFloat($('hoursPerDay').value),vacationWeeks:parseFloat($('vacationWeeks').value)}}
+function render(){
+ $('taxLabel').textContent=$('taxPct').value+'%'; $('unpaidLabel').textContent=$('unpaidPct').value+'%'; $('utilLabel').textContent=SoloRateLib.utilisation($('unpaidPct').value)+'%';
+ var inp=inputs(), sym=$('currency').value, msg=$('msg'); msg.textContent='';
+ if(isNaN(inp.targetIncome)||inp.targetIncome<0){msg.textContent='Enter a valid target income (0 or more) to calculate your rate.';}
+ var req=SoloRateLib.requiredRate(inp);
+ if(!req){ if(!msg.textContent) msg.textContent='Check your inputs: hours, vacation weeks and sliders must leave at least some billable time.'; return; }
+ var sugg=SoloRateLib.suggestedRates(req.hourlyRate);
+ $('bigRate').innerHTML=SoloRateLib.formatMoney(req.hourlyRate,sym)+'<span class="text-xl text-indigo-300">/hr</span>';
+ $('bigSub').textContent='Day rate '+SoloRateLib.formatMoney(req.dailyRate,sym)+' · Monthly gross '+SoloRateLib.formatMoney(req.monthlyGross,sym);
+ $('statHours').textContent=req.billableHours; $('statDay').textContent=SoloRateLib.formatMoney(req.dailyRate,sym); $('statStd').textContent=SoloRateLib.formatMoney(sugg.standard,sym); $('statRush').textContent=SoloRateLib.formatMoney(sugg.rush,sym);
+ $('rateCard').textContent=SoloRateLib.buildRateCard(req,sugg,sym);
+ if(mode==='forward'){
+   var f=SoloRateLib.incomeFromRate({hourlyRate:parseFloat($('testRate').value),taxPct:inp.taxPct,expenses:inp.expenses,hoursPerWeek:inp.hoursPerWeek,vacationWeeks:inp.vacationWeeks,unpaidPct:inp.unpaidPct,hoursPerDay:inp.hoursPerDay});
+   $('forwardResult').innerHTML=f?('At <b>'+SoloRateLib.formatMoney(parseFloat($('testRate').value),sym)+'/hr</b> you would gross <b>'+SoloRateLib.formatMoney(f.grossIncome,sym)+'</b> per year, pay about <b>'+SoloRateLib.formatMoney(f.taxAmount,sym)+'</b> in tax, and take home <b>'+SoloRateLib.formatMoney(f.netIncome,sym)+'</b> ('+SoloRateLib.formatMoney(f.monthlyNet,sym)+'/month) after expenses.'):'Enter a valid hourly rate to see projected income.';
+ }
+}
+['targetIncome','expenses','hoursPerWeek','hoursPerDay','vacationWeeks','taxPct','unpaidPct','currency','testRate'].forEach(function(id){$(id).addEventListener('input',render);$(id).addEventListener('change',render)});
+$('modeReverse').addEventListener('click',function(){mode='reverse';$('reverseInputs').classList.remove('hidden');$('forwardInputs').classList.add('hidden');$('modeReverse').className='flex-1 py-3 rounded-xl font-bold bg-indigo-600 text-white';$('modeForward').className='flex-1 py-3 rounded-xl font-bold bg-indigo-50 text-indigo-900 border border-indigo-200';render()});
+$('modeForward').addEventListener('click',function(){mode='forward';$('forwardInputs').classList.remove('hidden');$('reverseInputs').classList.add('hidden');$('modeForward').className='flex-1 py-3 rounded-xl font-bold bg-indigo-600 text-white';$('modeReverse').className='flex-1 py-3 rounded-xl font-bold bg-indigo-50 text-indigo-900 border border-indigo-200';render()});
+$('copyBtn').addEventListener('click',function(){var t=$('rateCard').textContent; if(navigator.clipboard){navigator.clipboard.writeText(t).then(function(){$('copyMsg').textContent='✅ Rate card copied — paste it into your next proposal.'})}else{$('copyMsg').textContent='Select the rate card text above and copy it manually.'}});
+render();
+</script>
+</body></html>
